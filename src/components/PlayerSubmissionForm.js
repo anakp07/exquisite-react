@@ -34,7 +34,7 @@ const PlayerSubmissionForm = () => {
         <div className="PlayerSubmissionForm__poem-inputs">
           <input
             name="adj1"
-            placeholder="adjective" 
+            placeholder="adjective1" 
             type="text" 
             className="PlayerSubmissionForm__input--invalid" 
             value={formFields.adj1}
@@ -42,7 +42,7 @@ const PlayerSubmissionForm = () => {
           />  
           <input 
             name="noun1"
-            placeholder="noun" 
+            placeholder="noun1" 
             type="text" 
             className="PlayerSubmissionForm__input--invalid" 
             value={formFields.noun1}
@@ -50,14 +50,14 @@ const PlayerSubmissionForm = () => {
           />
           <input 
             name="adv"
-            placeholder="adverb" 
+            placeholder="adverb1" 
             type="text" className="PlayerSubmissionForm__input--invalid" 
             value={formFields.adv}
             onChange={onChange}
           />
           <input 
             name="verb"
-            placeholder="verb" 
+            placeholder="verb1" 
             type="text" 
             className="PlayerSubmissionForm__input--invalid" 
             value={formFields.verb}
@@ -65,7 +65,7 @@ const PlayerSubmissionForm = () => {
           />the
           <input 
             name="adj2"
-            placeholder="adjective" 
+            placeholder="adjective2" 
             type="text" 
             className="PlayerSubmissionForm__input--invalid" 
             value={formFields.adj2}
@@ -73,13 +73,12 @@ const PlayerSubmissionForm = () => {
           />
           <input 
             name="noun2"
-            placeholder="noun" 
+            placeholder="noun2" 
             type="text" 
             className="PlayerSubmissionForm__input--invalid" 
             value={formFields.noun2}
             onChange={onChange}
           />
-
         </div>
 
         <div className="PlayerSubmissionForm__submit">
