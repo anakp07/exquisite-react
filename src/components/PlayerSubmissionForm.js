@@ -12,7 +12,7 @@ const PlayerSubmissionForm = (props) => {
     verb: '',
     adj2: '',
     noun2: ''
-  })
+  });
 
   const onInputChange =(event) => {
 
@@ -59,7 +59,7 @@ const PlayerSubmissionForm = (props) => {
   
           <div className="PlayerSubmissionForm__poem-inputs" >
             {
-              props.fields.map((field,i)=>{
+              props.fields.map((field, i)=> {
                 if (field.key) {
                   return (
                     <input
@@ -69,7 +69,7 @@ const PlayerSubmissionForm = (props) => {
                     onChange={onInputChange}
                     value={formFields[field.key] || ''}
                     type='text'
-                    className={!formFields[field.key] ? '' : 'PlayerSubmissionFormt_input--invalid'}
+                    className={!formFields[field.key] ? 'emptyField': 'populatedField'}
                     />)
                 } else {
                   return field;
