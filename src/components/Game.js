@@ -33,7 +33,7 @@ const Game = () => {
   }
     
   const revealPoem = () => {
-    isSubmitted(true);
+    setIsSubmitted(true);
   };
 
   const revealLastSubmission = submissions[submissions.length -1]
