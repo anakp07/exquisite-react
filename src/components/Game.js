@@ -8,8 +8,8 @@ const Game = () => {
 
   // game component will keep track of the various submissions 
 
-  const [submission, setSubmission] = useState ([]); 
-  const [submitted, setSubmitted] = useState(false);
+  const [submissions, setSubmissions] = useState ([]); 
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [player, setPlayer] = useState(1); 
  
 
@@ -21,27 +21,22 @@ const Game = () => {
     }
   }).join(' ');
 
-  const addSubmissionInput = (input) => {
-    const newFormValues = [...submission];
+  const addSubmissionInput = (submission) => {
 
-    const submissionInput = FIELDS.map((field)=> {
-      if (field.key) {
-        return input[field.key]
-      }
-      else {
-        return field
-      }
-    }).join(' ')
-    newFormValues.push(submissionInput);
-    setSubmission(newFormValues);
-    setPlayer(player); 
-  };
+    const newSubmissionFields = [...submissions];
+
+    newSubmissionFields.push(submission)
+
+    setSubmissions(newSubmissionFields)
+
+    setPlayer(player + 1)
+  }
     
-  const revealLastSubmission = submission[submission.length -1]
-
   const revealPoem = () => {
-    setSubmitted(true);
+    isSubmitted(true);
   };
+
+  const revealLastSubmission = submissions[submissions.length -1]
 
   return (
     <div className="Game">
@@ -55,11 +50,11 @@ const Game = () => {
         { exampleFormat }
       </p>
 
-      {(submitted) || (submission.length === 0 )? null: <RecentSubmission submission={revealLastSubmission} />} 
+      {(!isSubmitted) && submissions.length > 0 ?  <RecentSubmission submission={revealLastSubmission} />: ''} 
 
-      {submitted ? null: <PlayerSubmissionForm sendSubmission={addSubmissionInput} index={player} fields={FIELDS} />}
+      {(!isSubmitted) ? <PlayerSubmissionForm index={player} fields={FIELDS} sendSubmission={addSubmissionInput} /> : ''}
 
-      <FinalPoem  isSubmitted={submitted} submissions={submission} revealPoem={revealPoem}/>
+      <FinalPoem  isSubmitted={isSubmitted} submissions={submissions} revealPoem={revealPoem}/>
     </div>
   );
 }

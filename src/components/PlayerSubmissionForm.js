@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './PlayerSubmissionForm.css';
 
-const PlayerSubmissionForm = ({sendSubmission, index, fields}) => {
+const PlayerSubmissionForm = (props) => {
 
   const [formFields, setFormFields] = useState({
     adj1: '',
@@ -29,7 +29,17 @@ const PlayerSubmissionForm = ({sendSubmission, index, fields}) => {
     const onFormSubmit = (event) => {
       event.preventDefault();
 
-      sendSubmission(formFields);
+      const poemFields = props.fields.map(field => {
+        const submittedFields = {...formFields};
+        if(field.key) {
+          return submittedFields[field.key];
+        }
+        else {
+          return field
+        }
+      }).join(' ');
+
+      props.sendSubmission(poemFields);
 
       setFormFields({
         adj1: '',
@@ -41,30 +51,31 @@ const PlayerSubmissionForm = ({sendSubmission, index, fields}) => {
       });
     } 
 
-    const poemFields = fields.map((field, i)=> {
-      if(field === 'string'){
-        return (
-          <div key={i}>
-            {field}
-            </div>
-        )
-      }
-      else {
-        return (
-        <div key={i}>
-          <input name={field.key} type='text' placeholder={field.placeholder} value={formFields[field.key]} onChange={onInputChange} />
-        </div>
-        )
-      }
-    });
     return (
       <div className="PlayerSubmissionForm">
-        <h3>Player Submission Form for Player #{index}</h3>
+        <h3>Player Submission Form for Player #{props.index}</h3>
   
         <form className="PlayerSubmissionForm__form" onSubmit={onFormSubmit}>
   
           <div className="PlayerSubmissionForm__poem-inputs" >
-            {poemFields}
+            {
+              props.fields.map((field,i)=>{
+                if (field.key) {
+                  return (
+                    <input
+                    key={field.key}
+                    name={field.key}
+                    placeholder={field.placeholder}
+                    onChange={onInputChange}
+                    value={formFields[field.key] || ''}
+                    type='text'
+                    className={!formFields[field.key] ? '' : 'PlayerSubmissionFormt_input--invalid'}
+                    />)
+                } else {
+                  return field;
+                }
+              })
+            }
 
           </div>
           <div className="PlayerSubmissionForm__submit">
