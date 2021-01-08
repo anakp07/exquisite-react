@@ -8,7 +8,9 @@ const Game = () => {
 
   // game component will keep track of the various submissions 
 
-  const [formFields, setFormFields] = useState ([]); 
+  const [submission, setSubmission] = useState ([]); 
+  const [submitted, setSubmitted] = useState(false);
+  const [player, setPlayer] = useState(1); 
  
 
   const exampleFormat = FIELDS.map((field) => {
@@ -19,6 +21,27 @@ const Game = () => {
     }
   }).join(' ');
 
+  const addSubmissionInput = (input) => {
+    const newFormValues = [...submission];
+
+    const submissionInput = FIELDS.map((field)=> {
+      if (field.key) {
+        return input[field.key]
+      }
+      else {
+        return field
+      }
+    }).join(' ')
+    newFormValues.push(submissionInput);
+    setSubmission(newFormValues);
+    setPlayer(player); 
+  };
+    
+  const revealLastSubmission = submission[submission.length -1]
+
+  const revealPoem = () => {
+    setSubmitted(true);
+  };
 
   return (
     <div className="Game">
@@ -32,12 +55,11 @@ const Game = () => {
         { exampleFormat }
       </p>
 
-      <RecentSubmission />
+      {(submitted) || (submission.length === 0 )? null: <RecentSubmission submission={revealLastSubmission} />} 
 
-      <PlayerSubmissionForm />
+      {submitted ? null: <PlayerSubmissionForm sendSubmission={addSubmissionInput} index={player} fields={FIELDS} />}
 
-      <FinalPoem />
-
+      <FinalPoem  isSubmitted={submitted} submissions={submission} revealPoem={revealPoem}/>
     </div>
   );
 }
